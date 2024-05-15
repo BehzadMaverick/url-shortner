@@ -5,6 +5,6 @@ const router = Router();
 
 router.post('/url', authMiddleware, new UrlController().generateShortUrl);
 
-router.get('*', authMiddleware, new UrlController().getOriginalUrl);
+router.get('/:url', authMiddleware, new UrlController().getOriginalUrl);
 
 export default router
