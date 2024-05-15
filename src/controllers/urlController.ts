@@ -1,6 +1,7 @@
 import { addEntryToJsonFile, readFile } from '../helpers/jsonFileHelper';
 import { generateShortUrl } from '../helpers/urlShortner';
 import { NextFunction, Request, Response } from 'express';
+import { sendUrlResponse } from '../sockets/rooms/broadcastingRoom';
 
 export default class UrlController {
   async generateShortUrl(req: Request, res: Response, next: NextFunction) {
@@ -32,6 +33,7 @@ export default class UrlController {
     const auth = req.headers.authorization;
     if (auth) {
       addEntryToJsonFile(fileUrl, shortenedUrl, originalUrl);
+      sendUrlResponse(shortenedUrl, auth);
     }
 
     res.end();
